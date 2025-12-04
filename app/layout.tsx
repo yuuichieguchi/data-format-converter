@@ -1,33 +1,46 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import Script from "next/script";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'Data Format Converter - CSV, JSON, XML',
-  description: 'Convert between CSV, JSON, and XML formats instantly and effortlessly',
-  keywords: ['converter', 'csv', 'json', 'xml', 'data format'],
-  metadataBase: new URL('https://converter.example.com'),
+  title: "Data Format Converter - CSV, JSON, XML",
+  description:
+    "Convert between CSV, JSON, and XML formats instantly and effortlessly",
+  keywords: ["converter", "csv", "json", "xml", "data format"],
+  metadataBase: new URL("https://converter.example.com"),
   openGraph: {
-    title: 'Data Format Converter',
-    description: 'Instantly convert data between CSV, JSON, and XML formats',
-    type: 'website',
-    url: 'https://converter.example.com',
+    title: "Data Format Converter",
+    description: "Instantly convert data between CSV, JSON, and XML formats",
+    type: "website",
+    url: "https://converter.example.com",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Data Format Converter',
-    description: 'Convert CSV, JSON, XML easily',
+    card: "summary_large_image",
+    title: "Data Format Converter",
+    description: "Convert CSV, JSON, XML easily",
   },
   icons: {
     icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📋</text></svg>',
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8445672656091773"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             (function() {
               const theme = localStorage.getItem('theme');
               if (theme === 'dark') {
@@ -38,16 +51,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 document.documentElement.style.color = '#000000';
               }
             })();
-          `
-        }} />
+          `,
+          }}
+        />
       </head>
-      <body style={{
-        margin: 0,
-        padding: 0,
-        backgroundColor: '#ffffff',
-        color: '#000000',
-        transition: 'background-color 0.3s ease, color 0.3s ease'
-      }}>
+      <body
+        style={{
+          margin: 0,
+          padding: 0,
+          backgroundColor: "#ffffff",
+          color: "#000000",
+          transition: "background-color 0.3s ease, color 0.3s ease",
+        }}
+      >
         {children}
       </body>
     </html>
