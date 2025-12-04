@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { ConversionFormat } from '@/lib/types';
 
 interface FormatSelectorProps {
@@ -10,7 +11,19 @@ interface FormatSelectorProps {
 }
 
 export function FormatSelector({ label, value, onChange, disabled = false }: FormatSelectorProps) {
+  const [isDark, setIsDark] = useState(false);
   const formats: ConversionFormat[] = ['csv', 'json', 'xml'];
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -18,7 +31,7 @@ export function FormatSelector({ label, value, onChange, disabled = false }: For
         display: 'block',
         fontSize: '0.875rem',
         fontWeight: '600',
-        color: '#000000'
+        color: isDark ? '#ffffff' : '#000000'
       }}>
         {label}
       </label>
@@ -28,9 +41,9 @@ export function FormatSelector({ label, value, onChange, disabled = false }: For
         disabled={disabled}
         style={{
           width: '100%',
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          border: '1px solid #cbd5e1',
+          backgroundColor: isDark ? '#0f1419' : '#ffffff',
+          color: isDark ? '#ffffff' : '#000000',
+          border: `1px solid ${isDark ? '#2d3748' : '#cbd5e1'}`,
           borderRadius: '0.5rem',
           padding: '0.75rem',
           fontSize: '0.875rem',

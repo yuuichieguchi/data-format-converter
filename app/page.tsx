@@ -1,9 +1,32 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { ConversionPanel } from '@/components/ConversionPanel';
 
 export default function Home() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('storage', updateTheme);
+
+    const handleCustomEvent = () => {
+      updateTheme();
+    };
+    window.addEventListener('theme-changed', handleCustomEvent);
+
+    return () => {
+      window.removeEventListener('storage', updateTheme);
+      window.removeEventListener('theme-changed', handleCustomEvent);
+    };
+  }, []);
+
   const scrollToConverter = () => {
     const converterSection = document.getElementById('converter-section');
     if (converterSection) {
@@ -97,7 +120,7 @@ export default function Home() {
       {/* Features Section */}
       <div style={{
         padding: '5rem 2rem',
-        background: '#ffffff'
+        background: isDark ? '#1a202c' : '#ffffff'
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -108,7 +131,7 @@ export default function Home() {
             fontWeight: '700',
             textAlign: 'center',
             marginBottom: '3rem',
-            color: '#1a202c'
+            color: isDark ? '#ffffff' : '#1a202c'
           }}>
             主な機能
           </h2>
@@ -126,8 +149,8 @@ export default function Home() {
               <div key={i} style={{
                 padding: '2rem',
                 borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                background: '#f8f9fa',
+                border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
+                background: isDark ? '#2d3748' : '#f8f9fa',
                 transition: 'all 0.3s ease',
                 cursor: 'pointer'
               }} onMouseOver={(e) => {
@@ -141,13 +164,13 @@ export default function Home() {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: '600',
-                  color: '#1a202c',
+                  color: isDark ? '#ffffff' : '#1a202c',
                   marginBottom: '0.5rem'
                 }}>
                   {feature.title}
                 </h3>
                 <p style={{
-                  color: '#666666',
+                  color: isDark ? '#cbd5e1' : '#666666',
                   lineHeight: '1.6'
                 }}>
                   {feature.desc}
@@ -163,7 +186,7 @@ export default function Home() {
         id="converter-section"
         style={{
         padding: '5rem 2rem',
-        background: '#f8f9fa'
+        background: isDark ? '#0f1419' : '#f8f9fa'
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -174,7 +197,7 @@ export default function Home() {
             fontWeight: '700',
             textAlign: 'center',
             marginBottom: '3rem',
-            color: '#1a202c'
+            color: isDark ? '#ffffff' : '#1a202c'
           }}>
             データを変換する
           </h2>

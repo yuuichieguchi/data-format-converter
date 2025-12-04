@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { ConversionFormat, CSVOptions, JSONOptions, XMLOptions } from '@/lib/types';
 
 interface ConversionOptionsProps {
@@ -23,6 +24,19 @@ export function ConversionOptions({
   onJSONOptionsChange,
   onXMLOptionsChange,
 }: ConversionOptionsProps) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {(inputFormat === 'csv' || outputFormat === 'csv') && (
@@ -31,7 +45,7 @@ export function ConversionOptions({
             display: 'block',
             fontSize: '0.875rem',
             fontWeight: '600',
-            color: '#000000'
+            color: isDark ? '#ffffff' : '#000000'
           }}>
             CSV デリミタ
           </label>
@@ -40,9 +54,9 @@ export function ConversionOptions({
             onChange={(e) => onCSVOptionsChange({ delimiter: e.target.value as CSVOptions['delimiter'] })}
             style={{
               width: '100%',
-              backgroundColor: '#ffffff',
-              color: '#000000',
-              border: '1px solid #cbd5e1',
+              backgroundColor: isDark ? '#0f1419' : '#ffffff',
+              color: isDark ? '#ffffff' : '#000000',
+              border: `1px solid ${isDark ? '#2d3748' : '#cbd5e1'}`,
               borderRadius: '0.5rem',
               padding: '0.75rem',
               fontSize: '0.875rem',
@@ -77,7 +91,7 @@ export function ConversionOptions({
             display: 'block',
             fontSize: '0.875rem',
             fontWeight: '600',
-            color: '#000000'
+            color: isDark ? '#ffffff' : '#000000'
           }}>
             JSON インデント
           </label>
@@ -86,9 +100,9 @@ export function ConversionOptions({
             onChange={(e) => onJSONOptionsChange({ indent: parseInt(e.target.value) as 2 | 4 })}
             style={{
               width: '100%',
-              backgroundColor: '#ffffff',
-              color: '#000000',
-              border: '1px solid #cbd5e1',
+              backgroundColor: isDark ? '#0f1419' : '#ffffff',
+              color: isDark ? '#ffffff' : '#000000',
+              border: `1px solid ${isDark ? '#2d3748' : '#cbd5e1'}`,
               borderRadius: '0.5rem',
               padding: '0.75rem',
               fontSize: '0.875rem',
@@ -139,7 +153,7 @@ export function ConversionOptions({
             <span style={{
               fontSize: '0.875rem',
               fontWeight: '500',
-              color: '#000000'
+              color: isDark ? '#ffffff' : '#000000'
             }}>
               XML をきれいに表示
             </span>
@@ -165,7 +179,7 @@ export function ConversionOptions({
             <span style={{
               fontSize: '0.875rem',
               fontWeight: '500',
-              color: '#000000'
+              color: isDark ? '#ffffff' : '#000000'
             }}>
               XML 宣言を含める
             </span>

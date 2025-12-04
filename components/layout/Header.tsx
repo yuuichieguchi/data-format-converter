@@ -4,35 +4,48 @@ import { useState, useEffect } from 'react';
 
 export function Header() {
   const [isDark, setIsDark] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark');
+    setIsMounted(true);
+    const savedTheme = localStorage.getItem('theme');
+    const isDarkMode = savedTheme === 'dark';
     setIsDark(isDarkMode);
+
+    if (isDarkMode) {
+      document.documentElement.style.backgroundColor = '#1a202c';
+      document.documentElement.style.color = '#ffffff';
+    }
   }, []);
 
   const handleThemeToggle = () => {
-    const html = document.documentElement;
     const newDarkState = !isDark;
+    setIsDark(newDarkState);
 
     if (newDarkState) {
-      html.classList.add('dark');
+      document.documentElement.style.backgroundColor = '#1a202c';
+      document.documentElement.style.color = '#ffffff';
       localStorage.setItem('theme', 'dark');
     } else {
-      html.classList.remove('dark');
+      document.documentElement.style.backgroundColor = '#ffffff';
+      document.documentElement.style.color = '#000000';
       localStorage.setItem('theme', 'light');
     }
 
-    setIsDark(newDarkState);
+    // イベント発火してコンポーネントに通知
+    window.dispatchEvent(new Event('theme-changed'));
   };
+
+  if (!isMounted) return null;
 
   return (
     <header style={{
       position: 'sticky',
       top: 0,
       zIndex: 40,
-      background: '#ffffff',
-      borderBottom: '1px solid #e2e8f0',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
+      background: isDark ? '#1a202c' : '#ffffff',
+      borderBottom: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
+      boxShadow: `0 1px 3px ${isDark ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.08)'}`
     }}>
       <div style={{
         maxWidth: '1200px',
@@ -54,7 +67,7 @@ export function Header() {
           <h1 style={{
             fontSize: '1.25rem',
             fontWeight: '700',
-            color: '#1a202c'
+            color: isDark ? '#ffffff' : '#1a202c'
           }}>
             Data Converter
           </h1>

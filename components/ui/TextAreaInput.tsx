@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 interface TextAreaInputProps {
   label: string;
   value: string;
@@ -17,6 +19,19 @@ export function TextAreaInput({
   readOnly = false,
   rows = 10,
 }: TextAreaInputProps) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       {label && (
@@ -24,7 +39,7 @@ export function TextAreaInput({
           display: 'block',
           fontSize: '0.875rem',
           fontWeight: '600',
-          color: '#000000'
+          color: isDark ? '#ffffff' : '#000000'
         }}>
           {label}
         </label>
@@ -37,9 +52,9 @@ export function TextAreaInput({
         rows={rows}
         style={{
           width: '100%',
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          border: '1px solid #cbd5e1',
+          backgroundColor: isDark ? '#0f1419' : '#ffffff',
+          color: isDark ? '#ffffff' : '#000000',
+          border: `1px solid ${isDark ? '#2d3748' : '#cbd5e1'}`,
           borderRadius: '0.5rem',
           padding: '0.75rem',
           fontFamily: 'monospace',
@@ -48,7 +63,7 @@ export function TextAreaInput({
           transition: 'all 0.2s ease',
           cursor: readOnly ? 'default' : 'text',
           opacity: readOnly ? 0.7 : 1
-        } as React.CSSProperties & { '--placeholder-color': string }}
+        } as React.CSSProperties}
         onMouseOver={(e) => {
           if (!readOnly) {
             e.currentTarget.style.borderColor = '#667eea';

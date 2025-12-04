@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ConversionFormat, CSVOptions, JSONOptions, XMLOptions, ConversionError } from '@/lib/types';
 import { DEFAULT_CSV_OPTIONS, DEFAULT_JSON_OPTIONS, DEFAULT_XML_OPTIONS } from '@/lib/constants';
 import { convert } from '@/lib/converters/orchestrator';
@@ -12,6 +12,7 @@ import { ErrorDisplay } from './ui/ErrorDisplay';
 import { ConversionOptions } from './ui/ConversionOptions';
 
 export function ConversionPanel() {
+  const [isDark, setIsDark] = useState(false);
   const [inputFormat, setInputFormat] = useState<ConversionFormat>('csv');
   const [outputFormat, setOutputFormat] = useState<ConversionFormat>('json');
   const [inputContent, setInputContent] = useState('');
@@ -22,6 +23,27 @@ export function ConversionPanel() {
   const [csvOptions, setCSVOptions] = useState<CSVOptions>(DEFAULT_CSV_OPTIONS);
   const [jsonOptions, setJSONOptions] = useState<JSONOptions>(DEFAULT_JSON_OPTIONS);
   const [xmlOptions, setXMLOptions] = useState<XMLOptions>(DEFAULT_XML_OPTIONS);
+
+  const outputSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
+
+  useEffect(() => {
+    if (outputContent && outputSectionRef.current) {
+      setTimeout(() => {
+        outputSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }, [outputContent]);
 
   const handleConvert = async () => {
     if (!inputContent.trim()) {
@@ -103,11 +125,11 @@ export function ConversionPanel() {
         {/* Input Section */}
         <div
           style={{
-            backgroundColor: '#ffffff',
+            backgroundColor: isDark ? '#1a202c' : '#ffffff',
             borderRadius: '0.75rem',
             padding: '2rem',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-            border: '1px solid #e2e8f0',
+            border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
             display: 'flex',
             flexDirection: 'column',
             gap: '1.5rem'
@@ -123,7 +145,7 @@ export function ConversionPanel() {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <span style={{ fontSize: '1.5rem' }}>📥</span>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1a202c', margin: 0 }}>入力</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: isDark ? '#ffffff' : '#1a202c', margin: 0 }}>入力</h2>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -152,11 +174,11 @@ export function ConversionPanel() {
           {/* Output Format */}
           <div
             style={{
-              backgroundColor: '#ffffff',
+              backgroundColor: isDark ? '#1a202c' : '#ffffff',
               borderRadius: '0.75rem',
               padding: '2rem',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-              border: '1px solid #e2e8f0',
+              border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
               display: 'flex',
               flexDirection: 'column',
               gap: '1rem'
@@ -172,7 +194,7 @@ export function ConversionPanel() {
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <span style={{ fontSize: '1.5rem' }}>📤</span>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1a202c', margin: 0 }}>出力</h2>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: isDark ? '#ffffff' : '#1a202c', margin: 0 }}>出力</h2>
             </div>
             <FormatSelector label="目標形式" value={outputFormat} onChange={setOutputFormat} />
           </div>
@@ -180,11 +202,11 @@ export function ConversionPanel() {
           {/* Options */}
           <div
             style={{
-              backgroundColor: '#ffffff',
+              backgroundColor: isDark ? '#1a202c' : '#ffffff',
               borderRadius: '0.75rem',
               padding: '2rem',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-              border: '1px solid #e2e8f0'
+              border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`
             }}
             onMouseOver={(e) => {
               (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.08)';
@@ -195,7 +217,7 @@ export function ConversionPanel() {
               (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
             }}
           >
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#1a202c', margin: 0, marginBottom: '1rem' }}>設定</h3>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: isDark ? '#ffffff' : '#1a202c', margin: 0, marginBottom: '1rem' }}>設定</h3>
             <ConversionOptions
               inputFormat={inputFormat}
               outputFormat={outputFormat}
@@ -265,9 +287,9 @@ export function ConversionPanel() {
                 fontWeight: '500',
                 padding: '1rem',
                 borderRadius: '0.75rem',
-                border: '2px solid #e2e8f0',
-                backgroundColor: '#ffffff',
-                color: '#475569',
+                border: `2px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
+                backgroundColor: isDark ? '#0f1419' : '#ffffff',
+                color: isDark ? '#cbd5e1' : '#475569',
                 fontSize: '1rem',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
@@ -275,12 +297,12 @@ export function ConversionPanel() {
               onMouseOver={(e) => {
                 e.currentTarget.style.borderColor = '#667eea';
                 e.currentTarget.style.color = '#667eea';
-                e.currentTarget.style.backgroundColor = '#f8f9fa';
+                e.currentTarget.style.backgroundColor = isDark ? '#1a202c' : '#f8f9fa';
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = '#e2e8f0';
-                e.currentTarget.style.color = '#475569';
-                e.currentTarget.style.backgroundColor = '#ffffff';
+                e.currentTarget.style.borderColor = isDark ? '#2d3748' : '#e2e8f0';
+                e.currentTarget.style.color = isDark ? '#cbd5e1' : '#475569';
+                e.currentTarget.style.backgroundColor = isDark ? '#0f1419' : '#ffffff';
               }}
             >
               すべてクリア
@@ -292,12 +314,13 @@ export function ConversionPanel() {
       {/* Output Section */}
       {outputContent && (
         <div
+          ref={outputSectionRef}
           style={{
-            backgroundColor: '#ffffff',
+            backgroundColor: isDark ? '#1a202c' : '#ffffff',
             borderRadius: '0.75rem',
             padding: '2rem',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
-            border: '1px solid #e2e8f0',
+            border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
             display: 'flex',
             flexDirection: 'column',
             gap: '1.5rem'
@@ -313,7 +336,7 @@ export function ConversionPanel() {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <span style={{ fontSize: '1.5rem' }}>✅</span>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1a202c', margin: 0 }}>結果</h2>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', color: isDark ? '#ffffff' : '#1a202c', margin: 0 }}>結果</h2>
           </div>
           <OutputDisplay content={outputContent} onCopy={handleCopy} onDownload={handleDownload} />
         </div>

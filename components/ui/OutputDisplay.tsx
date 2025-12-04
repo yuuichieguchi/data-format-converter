@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 interface OutputDisplayProps {
   content: string;
   onCopy: () => void;
@@ -7,6 +9,18 @@ interface OutputDisplayProps {
 }
 
 export function OutputDisplay({ content, onCopy, onDownload }: OutputDisplayProps) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -69,9 +83,9 @@ export function OutputDisplay({ content, onCopy, onDownload }: OutputDisplayProp
         rows={10}
         style={{
           width: '100%',
-          backgroundColor: '#ffffff',
-          color: '#000000',
-          border: '1px solid #cbd5e1',
+          backgroundColor: isDark ? '#0f1419' : '#ffffff',
+          color: isDark ? '#ffffff' : '#000000',
+          border: `1px solid ${isDark ? '#2d3748' : '#cbd5e1'}`,
           borderRadius: '0.5rem',
           padding: '0.75rem',
           fontFamily: 'monospace',

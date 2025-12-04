@@ -13,7 +13,29 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body>
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              const theme = localStorage.getItem('theme');
+              if (theme === 'dark') {
+                document.documentElement.style.backgroundColor = '#1a202c';
+                document.documentElement.style.color = '#ffffff';
+              } else {
+                document.documentElement.style.backgroundColor = '#ffffff';
+                document.documentElement.style.color = '#000000';
+              }
+            })();
+          `
+        }} />
+      </head>
+      <body style={{
+        margin: 0,
+        padding: 0,
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        transition: 'background-color 0.3s ease, color 0.3s ease'
+      }}>
         {children}
       </body>
     </html>

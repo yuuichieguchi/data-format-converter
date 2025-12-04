@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 interface FileUploadProps {
   onFileSelect: (content: string, fileName: string) => void;
@@ -9,7 +9,19 @@ interface FileUploadProps {
 }
 
 export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'json', 'xml'] }: FileUploadProps) {
+  const [isDark, setIsDark] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      const theme = localStorage.getItem('theme');
+      setIsDark(theme === 'dark');
+    };
+
+    updateTheme();
+    window.addEventListener('theme-changed', updateTheme);
+    return () => window.removeEventListener('theme-changed', updateTheme);
+  }, []);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -64,7 +76,7 @@ export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'j
         display: 'block',
         fontSize: '0.875rem',
         fontWeight: '600',
-        color: '#000000'
+        color: isDark ? '#ffffff' : '#000000'
       }}>
         またはファイルをアップロード
       </label>
@@ -73,8 +85,8 @@ export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'j
         onDragOver={(e) => e.preventDefault()}
         style={{
           borderRadius: '0.5rem',
-          border: '2px dashed #cbd5e1',
-          backgroundColor: '#f8f9fa',
+          border: `2px dashed ${isDark ? '#2d3748' : '#cbd5e1'}`,
+          backgroundColor: isDark ? '#1a202c' : '#f8f9fa',
           padding: '1.5rem',
           textAlign: 'center',
           transition: 'all 0.2s ease',
@@ -82,11 +94,11 @@ export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'j
         }}
         onMouseOver={(e) => {
           e.currentTarget.style.borderColor = '#667eea';
-          e.currentTarget.style.backgroundColor = '#f0f3ff';
+          e.currentTarget.style.backgroundColor = isDark ? '#2d3748' : '#f0f3ff';
         }}
         onMouseOut={(e) => {
-          e.currentTarget.style.borderColor = '#cbd5e1';
-          e.currentTarget.style.backgroundColor = '#f8f9fa';
+          e.currentTarget.style.borderColor = isDark ? '#2d3748' : '#cbd5e1';
+          e.currentTarget.style.backgroundColor = isDark ? '#1a202c' : '#f8f9fa';
         }}
       >
         <input
@@ -117,10 +129,10 @@ export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'j
         >
           📁 ここをクリックしてアップロード
         </button>
-        <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#000000', margin: '0.25rem 0 0 0' }}>
+        <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: isDark ? '#ffffff' : '#000000', margin: '0.25rem 0 0 0' }}>
           またはドラッグ&ドロップ
         </p>
-        <p style={{ marginTop: '0.25rem', fontSize: '0.75rem', color: '#666666', margin: '0.25rem 0 0 0' }}>
+        <p style={{ marginTop: '0.25rem', fontSize: '0.75rem', color: isDark ? '#cbd5e1' : '#666666', margin: '0.25rem 0 0 0' }}>
           CSV、JSON、または XML（最大 10MB）
         </p>
       </div>
