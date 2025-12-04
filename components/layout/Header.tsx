@@ -78,7 +78,7 @@ export function Header() {
           onClick={handleThemeToggle}
           style={{
             padding: '0.5rem 0.75rem',
-            background: 'transparent',
+            background: isDark ? '#2d3748' : '#f0f0f0',
             border: 'none',
             borderRadius: '0.5rem',
             cursor: 'pointer',
@@ -86,10 +86,12 @@ export function Header() {
             transition: 'all 0.3s ease'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.background = '#f0f0f0';
+            e.currentTarget.style.background = isDark ? '#3d4758' : '#e0e0e0';
+            e.currentTarget.style.transform = 'scale(1.1) rotate(10deg)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.background = isDark ? '#2d3748' : '#f0f0f0';
+            e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
           }}
           title={isDark ? 'Light Mode' : 'Dark Mode'}
         >

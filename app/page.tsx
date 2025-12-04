@@ -67,10 +67,10 @@ export default function Home() {
         }} />
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl">
-          <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>📊</div>
+        <div className="relative z-10 text-center px-4 max-w-4xl">
+          <div style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', marginBottom: '1.5rem' }}>📊</div>
           <h1 style={{
-            fontSize: '3.5rem',
+            fontSize: 'clamp(1.75rem, 6vw, 3.5rem)',
             fontWeight: '800',
             color: '#ffffff',
             marginBottom: '1rem',
@@ -79,7 +79,7 @@ export default function Home() {
             Data Format Converter
           </h1>
           <p style={{
-            fontSize: '1.3rem',
+            fontSize: 'clamp(0.875rem, 4vw, 1.3rem)',
             color: 'rgba(255,255,255,0.9)',
             marginBottom: '2rem'
           }}>
@@ -105,10 +105,10 @@ export default function Home() {
               transition: 'all 0.3s ease',
               boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
             }} onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.3)';
+              e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.3)';
             }} onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
               e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
             }}>
               今すぐ変換開始
@@ -119,7 +119,7 @@ export default function Home() {
 
       {/* Features Section */}
       <div style={{
-        padding: '5rem 2rem',
+        padding: 'clamp(2rem, 5vw, 5rem) 1rem',
         background: isDark ? '#1a202c' : '#ffffff'
       }}>
         <div style={{
@@ -127,7 +127,7 @@ export default function Home() {
           margin: '0 auto'
         }}>
           <h2 style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
             fontWeight: '700',
             textAlign: 'center',
             marginBottom: '3rem',
@@ -137,8 +137,8 @@ export default function Home() {
           </h2>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1.5rem'
           }}>
             {[
               { icon: '⚡', title: '高速変換', desc: 'リアルタイムでデータを変換' },
@@ -154,10 +154,10 @@ export default function Home() {
                 transition: 'all 0.3s ease',
                 cursor: 'pointer'
               }} onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.1)';
+                e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.15)';
               }} onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
                 e.currentTarget.style.boxShadow = 'none';
               }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{feature.icon}</div>
@@ -185,7 +185,7 @@ export default function Home() {
       <div
         id="converter-section"
         style={{
-        padding: '5rem 2rem',
+        padding: 'clamp(2rem, 5vw, 5rem) 1rem',
         background: isDark ? '#0f1419' : '#f8f9fa'
       }}>
         <div style={{
@@ -193,7 +193,7 @@ export default function Home() {
           margin: '0 auto'
         }}>
           <h2 style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
             fontWeight: '700',
             textAlign: 'center',
             marginBottom: '3rem',

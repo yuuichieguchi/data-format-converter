@@ -5,6 +5,18 @@ export const metadata: Metadata = {
   title: 'Data Format Converter - CSV, JSON, XML',
   description: 'Convert between CSV, JSON, and XML formats instantly and effortlessly',
   keywords: ['converter', 'csv', 'json', 'xml', 'data format'],
+  metadataBase: new URL('https://converter.example.com'),
+  openGraph: {
+    title: 'Data Format Converter',
+    description: 'Instantly convert data between CSV, JSON, and XML formats',
+    type: 'website',
+    url: 'https://converter.example.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Data Format Converter',
+    description: 'Convert CSV, JSON, XML easily',
+  },
   icons: {
     icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📋</text></svg>',
   },

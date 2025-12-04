@@ -119,15 +119,15 @@ export function ConversionPanel() {
       {/* Main Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-        gap: '2rem'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1.5rem'
       }}>
         {/* Input Section */}
         <div
           style={{
             backgroundColor: isDark ? '#1a202c' : '#ffffff',
             borderRadius: '0.75rem',
-            padding: '2rem',
+            padding: 'clamp(1rem, 4vw, 2rem)',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
             border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
             display: 'flex',
@@ -176,7 +176,7 @@ export function ConversionPanel() {
             style={{
               backgroundColor: isDark ? '#1a202c' : '#ffffff',
               borderRadius: '0.75rem',
-              padding: '2rem',
+              padding: 'clamp(1rem, 4vw, 2rem)',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
               border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
               display: 'flex',
@@ -204,7 +204,7 @@ export function ConversionPanel() {
             style={{
               backgroundColor: isDark ? '#1a202c' : '#ffffff',
               borderRadius: '0.75rem',
-              padding: '2rem',
+              padding: 'clamp(1rem, 4vw, 2rem)',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
               border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`
             }}
@@ -251,14 +251,14 @@ export function ConversionPanel() {
               onMouseOver={(e) => {
                 if (!isLoading) {
                   e.currentTarget.style.backgroundColor = '#764ba2';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 15px 35px rgba(102, 126, 234, 0.4)';
                 }
               }}
               onMouseOut={(e) => {
                 if (!isLoading) {
                   e.currentTarget.style.backgroundColor = '#667eea';
-                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.boxShadow = 'none';
                 }
               }}
@@ -318,7 +318,7 @@ export function ConversionPanel() {
           style={{
             backgroundColor: isDark ? '#1a202c' : '#ffffff',
             borderRadius: '0.75rem',
-            padding: '2rem',
+            padding: 'clamp(1rem, 4vw, 2rem)',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.07)',
             border: `1px solid ${isDark ? '#2d3748' : '#e2e8f0'}`,
             display: 'flex',

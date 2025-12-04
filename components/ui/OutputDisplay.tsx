@@ -39,12 +39,12 @@ export function OutputDisplay({ content, onCopy, onDownload }: OutputDisplayProp
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.backgroundColor = '#764ba2';
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+            e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.4)';
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.backgroundColor = '#667eea';
-            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.transform = 'translateY(0) scale(1)';
             e.currentTarget.style.boxShadow = 'none';
           }}
           title="クリップボードにコピー"
@@ -66,11 +66,15 @@ export function OutputDisplay({ content, onCopy, onDownload }: OutputDisplayProp
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.borderColor = '#667eea';
-            e.currentTarget.style.backgroundColor = '#f8f9fa';
+            e.currentTarget.style.backgroundColor = '#f0f7ff';
+            e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.2)';
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.borderColor = '#e2e8f0';
             e.currentTarget.style.backgroundColor = '#ffffff';
+            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+            e.currentTarget.style.boxShadow = 'none';
           }}
           title="ファイルとしてダウンロード"
         >

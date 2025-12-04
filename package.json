@@ -2,7 +2,13 @@
   "name": "data-format-converter",
   "version": "1.0.0",
   "description": "Convert between CSV, JSON, and XML formats with a modern web interface",
-  "keywords": ["csv", "json", "xml", "converter", "format-conversion"],
+  "keywords": [
+    "csv",
+    "json",
+    "xml",
+    "converter",
+    "format-conversion"
+  ],
   "author": "",
   "license": "MIT",
   "scripts": {
@@ -25,6 +31,7 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.0.7",
     "@tailwindcss/postcss": "^4.1.17",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
