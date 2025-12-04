@@ -32,6 +32,11 @@ export default function RootLayout({
     <html lang="ja" suppressHydrationWarning>
       <head>
         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8445672656091773"
+          crossOrigin="anonymous"
+        ></script>
+        <script
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
