@@ -93,7 +93,7 @@ export function detectRootElement(data: any): string {
 }
 
 export function formatXML(xml: string, indent: string = '  '): string {
-  let formatted = '';
+  const result: string[] = [];
   let indentLevel = 0;
   let inTag = false;
 
@@ -102,17 +102,17 @@ export function formatXML(xml: string, indent: string = '  '): string {
 
     if (char === '<') {
       inTag = true;
-      if (formatted.length > 0 && formatted[formatted.length - 1] !== '\n') {
-        formatted += '\n';
+      if (result.length > 0 && result[result.length - 1] !== '\n') {
+        result.push('\n');
       }
-      formatted += indent.repeat(indentLevel);
+      result.push(indent.repeat(indentLevel));
 
       if (xml.substring(i, i + 2) === '</') {
         indentLevel = Math.max(0, indentLevel - 1);
       }
     }
 
-    formatted += char;
+    result.push(char);
 
     if (char === '>' && inTag) {
       inTag = false;
@@ -129,5 +129,5 @@ export function formatXML(xml: string, indent: string = '  '): string {
     }
   }
 
-  return formatted.trim();
+  return result.join('').trim();
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 import { ConversionFormat } from '@/lib/types';
 
 interface FormatSelectorProps {
@@ -11,19 +11,8 @@ interface FormatSelectorProps {
 }
 
 export function FormatSelector({ label, value, onChange, disabled = false }: FormatSelectorProps) {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useTheme();
   const formats: ConversionFormat[] = ['csv', 'json', 'xml'];
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsDark(theme === 'dark');
-    };
-
-    updateTheme();
-    window.addEventListener('theme-changed', updateTheme);
-    return () => window.removeEventListener('theme-changed', updateTheme);
-  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
 interface OutputDisplayProps {
   content: string;
@@ -9,18 +9,8 @@ interface OutputDisplayProps {
 }
 
 export function OutputDisplay({ content, onCopy, onDownload }: OutputDisplayProps) {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useTheme();
 
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsDark(theme === 'dark');
-    };
-
-    updateTheme();
-    window.addEventListener('theme-changed', updateTheme);
-    return () => window.removeEventListener('theme-changed', updateTheme);
-  }, []);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <div style={{ display: 'flex', gap: '0.75rem' }}>

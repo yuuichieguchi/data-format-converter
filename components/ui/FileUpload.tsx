@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
 interface FileUploadProps {
   onFileSelect: (content: string, fileName: string) => void;
@@ -9,19 +10,8 @@ interface FileUploadProps {
 }
 
 export function FileUpload({ onFileSelect, onError, acceptedFormats = ['csv', 'json', 'xml'] }: FileUploadProps) {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsDark(theme === 'dark');
-    };
-
-    updateTheme();
-    window.addEventListener('theme-changed', updateTheme);
-    return () => window.removeEventListener('theme-changed', updateTheme);
-  }, []);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

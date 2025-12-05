@@ -10,7 +10,7 @@ describe('Header Component', () => {
 
   it('renders header with title', () => {
     render(<Header />);
-    expect(screen.getByText('Data Converter')).toBeInTheDocument();
+    expect(screen.getByText('Data Format Converter')).toBeInTheDocument();
   });
 
   it('renders theme toggle button', () => {

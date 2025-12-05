@@ -1,5 +1,5 @@
 import { XMLOptions, ConversionResult, XMLNode } from '../types';
-import { DEFAULT_XML_OPTIONS, ERROR_MESSAGES } from '../constants';
+import { DEFAULT_XML_OPTIONS, ERROR_MESSAGES, MAX_XML_DEPTH } from '../constants';
 import { createConversionError, sanitizeXMLString } from '../utils';
 
 // Simple XML parser that doesn't require external libraries for basic use
@@ -7,6 +7,7 @@ function simpleParseXML(xmlString: string): XMLNode {
   const stack: XMLNode[] = [{}];
   const root: XMLNode = {};
   let current = root;
+  let maxDepth = 0;
 
   // Regex to match XML tags and content
   const tagRegex = /<([^/?!][^\s>]*)((?:\s+[^\s=]+="[^"]*")*)\s*\/?>/g;
@@ -46,7 +47,8 @@ function simpleParseXML(xmlString: string): XMLNode {
       if (tagName in current) {
         // Handle multiple elements with same name
         if (!Array.isArray(current[tagName])) {
-          current[tagName] = [current[tagName]];
+          const existingValue = current[tagName];
+          current[tagName] = [existingValue as XMLNode];
         }
         (current[tagName] as XMLNode[]).push(element);
       } else {
@@ -57,6 +59,14 @@ function simpleParseXML(xmlString: string): XMLNode {
     if (!isSelfClosing) {
       stack.push(element);
       current = element;
+
+      if (stack.length > maxDepth) {
+        maxDepth = stack.length;
+      }
+
+      if (maxDepth > MAX_XML_DEPTH) {
+        throw new Error(`XML exceeds maximum depth (${MAX_XML_DEPTH})`);
+      }
     }
 
     lastIndex = match.index + fullMatch.length;
@@ -90,8 +100,23 @@ export function parseXML(input: string): ConversionResult<XMLNode> {
       };
     }
 
-    // Basic validation
     const trimmed = input.trim();
+
+    if (trimmed.includes('<!DOCTYPE') || trimmed.includes('<!ENTITY')) {
+      return {
+        success: false,
+        error: createConversionError('DOCTYPE and ENTITY declarations are not allowed for security reasons'),
+      };
+    }
+
+    if (trimmed.includes('<![CDATA[')) {
+      return {
+        success: false,
+        error: createConversionError('CDATA sections are not supported'),
+      };
+    }
+
+    // Basic validation
     if (!trimmed.startsWith('<')) {
       return {
         success: false,

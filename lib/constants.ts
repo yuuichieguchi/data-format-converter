@@ -27,6 +27,9 @@ export const ERROR_MESSAGES = {
 };
 
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+export const MAX_CSV_ROWS = 100000;
+export const MAX_XML_DEPTH = 100;
+export const MAX_PROCESSING_TIME = 5000; // 5 seconds
 
 export const SUPPORTED_FORMATS = ['csv', 'json', 'xml'] as const;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 import { ConversionFormat, CSVOptions, JSONOptions, XMLOptions } from '@/lib/types';
 
 interface ConversionOptionsProps {
@@ -24,18 +24,7 @@ export function ConversionOptions({
   onJSONOptionsChange,
   onXMLOptionsChange,
 }: ConversionOptionsProps) {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsDark(theme === 'dark');
-    };
-
-    updateTheme();
-    window.addEventListener('theme-changed', updateTheme);
-    return () => window.removeEventListener('theme-changed', updateTheme);
-  }, []);
+  const isDark = useTheme();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

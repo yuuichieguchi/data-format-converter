@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 import { ConversionFormat, CSVOptions, JSONOptions, XMLOptions, ConversionError } from '@/lib/types';
 import { DEFAULT_CSV_OPTIONS, DEFAULT_JSON_OPTIONS, DEFAULT_XML_OPTIONS } from '@/lib/constants';
 import { convert } from '@/lib/converters/orchestrator';
@@ -12,7 +13,7 @@ import { ErrorDisplay } from './ui/ErrorDisplay';
 import { ConversionOptions } from './ui/ConversionOptions';
 
 export function ConversionPanel() {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useTheme();
   const [inputFormat, setInputFormat] = useState<ConversionFormat>('csv');
   const [outputFormat, setOutputFormat] = useState<ConversionFormat>('json');
   const [inputContent, setInputContent] = useState('');
@@ -25,17 +26,6 @@ export function ConversionPanel() {
   const [xmlOptions, setXMLOptions] = useState<XMLOptions>(DEFAULT_XML_OPTIONS);
 
   const outputSectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      setIsDark(theme === 'dark');
-    };
-
-    updateTheme();
-    window.addEventListener('theme-changed', updateTheme);
-    return () => window.removeEventListener('theme-changed', updateTheme);
-  }, []);
 
   useEffect(() => {
     if (outputContent && outputSectionRef.current) {

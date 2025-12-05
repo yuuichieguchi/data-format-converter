@@ -1,5 +1,5 @@
 import { CSVData, CSVOptions, ConversionResult } from '../types';
-import { DEFAULT_CSV_OPTIONS, ERROR_MESSAGES } from '../constants';
+import { DEFAULT_CSV_OPTIONS, ERROR_MESSAGES, MAX_CSV_ROWS } from '../constants';
 import { escapeCSVField, unescapeCSVField, createConversionError } from '../utils';
 
 export function parseCSV(input: string, options: Partial<CSVOptions> = {}): ConversionResult<CSVData> {
@@ -68,6 +68,13 @@ export function parseCSV(input: string, options: Partial<CSVOptions> = {}): Conv
       return {
         success: false,
         error: createConversionError(ERROR_MESSAGES.EMPTY_INPUT),
+      };
+    }
+
+    if (lines.length > MAX_CSV_ROWS) {
+      return {
+        success: false,
+        error: createConversionError(`CSV exceeds maximum allowed rows (${MAX_CSV_ROWS})`),
       };
     }
 

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from '@/hooks/useTheme';
 
 export function Header() {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     const savedTheme = localStorage.getItem("theme");
     const isDarkMode = savedTheme === "dark";
-    setIsDark(isDarkMode);
 
     if (isDarkMode) {
       document.documentElement.style.backgroundColor = "#1a202c";
@@ -20,7 +20,6 @@ export function Header() {
 
   const handleThemeToggle = () => {
     const newDarkState = !isDark;
-    setIsDark(newDarkState);
 
     if (newDarkState) {
       document.documentElement.style.backgroundColor = "#1a202c";
@@ -32,7 +31,6 @@ export function Header() {
       localStorage.setItem("theme", "light");
     }
 
-    // イベント発火してコンポーネントに通知
     window.dispatchEvent(new Event("theme-changed"));
   };
 

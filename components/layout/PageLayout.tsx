@@ -1,6 +1,7 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 import { Header } from './Header';
 
 interface PageLayoutProps {
@@ -8,19 +9,7 @@ interface PageLayoutProps {
 }
 
 export function PageLayout({ children }: PageLayoutProps) {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const theme = localStorage.getItem('theme');
-      const dark = theme === 'dark';
-      setIsDark(dark);
-    };
-
-    updateTheme();
-    window.addEventListener('storage', updateTheme);
-    return () => window.removeEventListener('storage', updateTheme);
-  }, []);
+  const isDark = useTheme();
 
   return (
     <div style={{

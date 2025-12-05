@@ -47,6 +47,8 @@ export interface ConversionRequest {
 
 export type CSVData = Record<string, string>[];
 
+export type XMLNodeValue = string | number | boolean | null | XMLNode | XMLNode[];
+
 export interface XMLNode {
-  [key: string]: any;
+  [key: string]: XMLNodeValue;
 }
