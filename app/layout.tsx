@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   description:
     "Convert between CSV, JSON, and XML formats instantly and effortlessly",
   keywords: ["converter", "csv", "json", "xml", "data format"],
-  metadataBase: new URL("https://converter.example.com"),
+  metadataBase: new URL("https://data-format-converter-inky.vercel.app/"),
   openGraph: {
     title: "Data Format Converter",
     description: "Instantly convert data between CSV, JSON, and XML formats",
     type: "website",
-    url: "https://converter.example.com",
+    url: "https://data-format-converter-inky.vercel.app/",
   },
   twitter: {
     card: "summary_large_image",
