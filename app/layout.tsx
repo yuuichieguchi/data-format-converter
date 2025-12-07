@@ -5,13 +5,36 @@ export const metadata: Metadata = {
   title: "Data Format Converter - CSV, JSON, XML",
   description:
     "Convert between CSV, JSON, and XML formats instantly and effortlessly",
-  keywords: ["converter", "csv", "json", "xml", "data format"],
+  keywords: [
+    "data format converter",
+    "csv to json",
+    "json to csv",
+    "xml to json",
+    "json to xml",
+    "csv to xml",
+    "xml to csv",
+    "online converter",
+    "free converter",
+    "data transformation",
+    "file format conversion",
+    "CSV変換",
+    "JSON変換",
+    "XML変換",
+    "データ変換",
+    "フォーマット変換",
+    "オンラインツール",
+  ],
   metadataBase: new URL("https://data-format-converter-inky.vercel.app/"),
+  alternates: {
+    canonical: "https://data-format-converter-inky.vercel.app/",
+  },
   openGraph: {
     title: "Data Format Converter",
     description: "Instantly convert data between CSV, JSON, and XML formats",
     type: "website",
     url: "https://data-format-converter-inky.vercel.app/",
+    siteName: "Data Format Converter",
+    locale: "ja_JP",
   },
   twitter: {
     card: "summary_large_image",
@@ -24,6 +47,42 @@ export const metadata: Metadata = {
   verification: {
     google: "qDjNwUaLfOwddmNI75rPqLANJJNBCRsKXySsNayn_ZI",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Data Format Converter",
+  description:
+    "Convert between CSV, JSON, and XML formats instantly and effortlessly",
+  url: "https://data-format-converter-inky.vercel.app/",
+  applicationCategory: "UtilityApplication",
+  operatingSystem: "Any",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "JPY",
+  },
+  featureList: [
+    "CSV to JSON conversion",
+    "JSON to CSV conversion",
+    "XML to JSON conversion",
+    "JSON to XML conversion",
+    "CSV to XML conversion",
+    "XML to CSV conversion",
+  ],
+  inLanguage: "ja",
 };
 
 export default function RootLayout({
@@ -34,6 +93,10 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8445672656091773"
